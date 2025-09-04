@@ -48,7 +48,7 @@ train_loader = DataLoader(TensorDataset(X_train, Y_train), batch_size=32, shuffl
 test_loader = DataLoader(TensorDataset(X_test, Y_test), batch_size=32)
 
 class Detector(nn.Module):
-    def __init__(self, input_size=3, hidden_size=32, num_layers=1, bidirectional=True):
+    def __init__(self, input_size=3, hidden_size=32, num_layers=2, bidirectional=True):
         super().__init__()
         self.lstm = nn.LSTM(input_size, hidden_size, num_layers, 
                            batch_first=True, bidirectional=bidirectional) # perhaps make bidirectional to learn patterns relating to other motions
@@ -82,6 +82,3 @@ with torch.no_grad():
     test_outputs = model(X_test)
     test_loss = criterion(test_outputs, Y_test)
     print(f"Test Loss: {test_loss.item():.4f}")
-
-with torch.no_grad():
-    
