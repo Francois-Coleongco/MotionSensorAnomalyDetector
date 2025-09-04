@@ -12,17 +12,17 @@ The entire timestamp of a motion event is not required for the most part. The on
 
 Since there are a high ratio of non-intrusion to intrusion samples, I have attempted to balance the dataset by using WeightedRandomSampler which gives a weight to the two labels for all the entries, prioritizing the under-represented entries encoded with intrusion.
 
-# Law of Large Numbers / Central Limit Theorem:
+# Law of Large Numbers:
 
-Epochs ran on the last trial was 36, which is greater than 30, which means we can assume the WeightedRandomSampler which was passed to the train_loader, will create enough variation over the 36 epochs to even out our dataset by the end of the training.
+Dataset was of size 648 entries in the `dat.csv` file. With a batch size of 16, each epoch consists of approximately 40 batches. Over 36 epochs, the model is trained on roughly 36 * 40 = 1,440 independently sampled batches. Therefore, the `WeightedRandomSampler` which was passed to the `train_loader`, will create enough variation to even out our dataset by the end of the training. I say it needs to even out despite our `WeightedRandomSampler` because it uses a probabalistic approach to balancing the data and may not provide an exactly even split.
 
-## Evaluation
-
-
-Epoch 36, Val Loss: 0.0072, Val Acc: 100.00%, Val F1: 1.0000
-(Accuracy calculation used rounded values output from the model, these were float32s so they were in the continuous range from 0 - 1)
+## Evaluation/Limitations
 
 Early stopping was implemented to prevent the model from overfitting to the training data.
+
+Unfortunately, the dataset I have used is still not large enough and does not have enough anomaly data to make totally acceptable inferences.
+
+
 
 ## Deployment
 
